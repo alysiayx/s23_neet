@@ -61,7 +61,7 @@ def main():
             **Use synthetic data**
 
             You are currently using synthetic data to test the dashboard.
-            Every individual’s data, as seen in the results, has been synthetically
+            Every individual's data, as seen in the results, has been synthetically
             created and they are NOT real people. School names are real, but the results
             shown DO NOT reflect reality. The synthetic data shown should only be used
             to understand the type of analysis and visualisation the NEETalert tool offers
