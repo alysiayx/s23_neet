@@ -656,7 +656,7 @@ def main():
     col1.button(
         "Process data & calculate predictions",
         type="primary",
-       # on_click=ut.calculate_predictions,
+        on_click=ut.calculate_predictions,
         # Only run if raw data is available
         disabled=(
             len(st.session_state.data_raw) == 0
