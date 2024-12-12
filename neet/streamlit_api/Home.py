@@ -1,6 +1,10 @@
+import sys, os
+
+sys.path.append(os.path.join(os.getcwd()))
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
 import streamlit as st
 import utils as ut
-
 
 st.set_page_config(
     page_title="Home - NEETalert",
