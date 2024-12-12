@@ -38,6 +38,7 @@ def read_exclusions() -> List[pd.DataFrame]:
 
 
 def read_ks2() -> List[pd.DataFrame]:
+    schema = get_schema("ks2")
     dfs = preproc.read_excels(
         cwd /"ks2", constants.EXCEL_FILES_KS2, schema
     )
@@ -61,7 +62,7 @@ def read_nccis() -> List[pd.DataFrame]:
 
 def read_school_performance() -> List[pd.DataFrame]:
     schema = get_schema("school-performance")
-    dfs = preproc.read_excels(cwd/"school_performance", constants.EXCEL_FILES_SCHOOL_PERFORMANCE)
+    dfs = preproc.read_excels(cwd/"school_performance", constants.EXCEL_FILES_SCHOOL_PERFORMANCE, schema)
     return dfs
 
 
