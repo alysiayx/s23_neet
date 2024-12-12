@@ -28,6 +28,12 @@ DATA_STREAMLIT_RAW_PATH = DATA_STREAMLIT_PATH / "raw"
 DATA_STREAMLIT_INTERMEDIATE_PATH = DATA_STREAMLIT_PATH / "intermediate"
 DATA_STREAMLIT_FINAL_PATH = DATA_STREAMLIT_PATH / "final"
 
+# create folders only if they not exists 
+# (temporary solution to avoid FileNotExist error)
+DATA_STREAMLIT_RAW_PATH.mkdir(parents=True, exist_ok=True)
+DATA_STREAMLIT_INTERMEDIATE_PATH.mkdir(parents=True, exist_ok=True)
+DATA_STREAMLIT_FINAL_PATH.mkdir(parents=True, exist_ok=True)
+
 STREAMLIT_PATH = Path.cwd() / "neet" / "streamlit_api"
 
 #############
