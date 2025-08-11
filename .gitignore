@@ -27,3 +27,4 @@ data_dashboard/
 
 # macOS hidden files
 .DS_Store
+/.history
