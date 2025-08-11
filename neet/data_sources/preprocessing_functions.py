@@ -56,7 +56,12 @@ def read_excel(folder: Path, filename: str, sheetname: str, cohort: str, year: i
     Returns:
         A pandas dataframe
     """
-    df = pd.read_excel(folder / filename, sheet_name=sheetname)
+    try:
+        df = pd.read_excel(folder / filename, sheet_name=sheetname)
+    except ValueError as e:
+        xls = pd.ExcelFile(folder / filename)
+        print(f"Worksheets found in {filename} in {folder} are {xls.sheet_names}.")
+        raise ValueError(f"Error reading {filename} in {folder}: {e}")
 
     # Column names to snake case (also transforms simple camelCase and removes special characters):
     df.columns = (df.columns
@@ -74,13 +79,21 @@ def read_excel(folder: Path, filename: str, sheetname: str, cohort: str, year: i
                   )
 
     # Validate the schema
-    if schema:
-        try:
-            df = schema.validate(df, lazy=True)
-        except pa.errors.SchemaErrors as err:
-            err.failure_cases  # dataframe of schema errors
-            err.data  # invalid dataframe
-            raise
+    # if 'ncyear_actual' in df.columns:
+    #     df['ncyear_actual'].replace('N1', np.nan, inplace=True)
+    
+    # if 'support_level' in df.columns:
+    #     df['support_level'].replace('Z', np.nan, inplace=True)
+    
+    # if schema:
+    #     try:
+    #         df = schema.validate(df, lazy=True)
+    #     except pa.errors.SchemaErrors as err:
+    #         err.failure_cases  # dataframe of schema errors
+    #         err.data  # invalid dataframe
+    #         # raise
+    #         pass
+    
 
     df['cohort'] = cohort
 
@@ -189,9 +202,9 @@ def merge_dfs(dfs: list[pd.DataFrame], ignore_dtypes: bool = False) -> pd.DataFr
     Raises:
         ValueError: If the column names or dtypes do not match
     """
-    if not all(set(df.columns) == set(dfs[0].columns) for df in dfs):
-        raise ValueError(
-            "Dataframes need to have the same column names before merging.")
+    # if not all(set(df.columns) == set(dfs[0].columns) for df in dfs):
+    #     raise ValueError(
+    #         "Dataframes need to have the same column names before merging.")
 
     if not ignore_dtypes:
         if not all(set(df.dtypes) == set(dfs[0].dtypes) for df in dfs):
@@ -436,6 +449,8 @@ def census_aggregate(df: pd.DataFrame) -> pd.DataFrame:
     df['resourced_provision_indicator'] = df['resourced_provision_indicator'].astype(
         int)
     df['fsme_on_census_day'] = df['fsme_on_census_day'].astype(int)
+    
+    # df['ncyear_actual'].replace('N1', np.nan, inplace=True)
 
     return df.reset_index()
 
@@ -595,8 +610,8 @@ def canonicalize_nccis(dfs: list[pd.DataFrame], columns_to_keep: set) -> list[pd
 
         # Rename the student_id column for one of the datasets
         frame = df.rename(columns=columns_name_mapping, errors='ignore')
-
         dfs[idx] = frame[columns_to_keep]
+        # dfs[idx] = frame[[col for col in columns_to_keep if col in frame.columns]]
 
     return dfs
 

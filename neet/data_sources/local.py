@@ -96,7 +96,7 @@ def read_datasets() -> DatasetType:
     ks4 = read_ks4()
     september_guarantee = read_september_guarantee()
     nccis = read_nccis()
-    school_performance = read_school_performance()
+    # school_performance = read_school_performance()
     #regional_data = read_regional_data()
     #postcodes = read_postcodes()
 
@@ -107,7 +107,7 @@ def read_datasets() -> DatasetType:
         ks4,
         nccis,
         september_guarantee,
-        school_performance
+        # school_performance
         #regional_data,
         #postcodes
     )

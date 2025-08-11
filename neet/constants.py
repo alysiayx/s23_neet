@@ -58,6 +58,6 @@ class DatasetType(NamedTuple):
     ks4: List[pd.DataFrame]
     nccis: List[pd.DataFrame]
     september_guarantee: List[pd.DataFrame]
-    school_performance: List[pd.DataFrame]
+    # school_performance: List[pd.DataFrame]
     #regional_data :List[pd.DataFrame]
     #postcodes : List[pd.DataFrame]
